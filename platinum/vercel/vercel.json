@@ -1,0 +1,51 @@
+{
+  "version": 2,
+  "name": "ai-employee-platinum",
+  "builds": [
+    {
+      "src": "platinum/vercel/api/**/*.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "platinum/vercel/public/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/platinum/vercel/api/$1"
+    },
+    {
+      "src": "/health",
+      "dest": "/platinum/vercel/api/health.py"
+    },
+    {
+      "src": "/webhook/(.*)",
+      "dest": "/platinum/vercel/api/webhooks/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/platinum/vercel/public/$1"
+    }
+  ],
+  "env": {
+    "PYTHON_VERSION": "3.11",
+    "VAULT_PATH": "/tmp/ai-employee-vault",
+    "AGENT_MODE": "cloud",
+    "LOG_LEVEL": "INFO"
+  },
+  "build": {
+    "env": {
+      "PIP_INSTALL": "true"
+    }
+  },
+  "outputDirectory": "platinum/vercel/public",
+  "regions": ["iad1"],
+  "functions": {
+    "platinum/vercel/api/**/*.py": {
+      "memory": 1024,
+      "maxDuration": 60
+    }
+  }
+}

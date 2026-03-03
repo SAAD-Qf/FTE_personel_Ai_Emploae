@@ -1,15 +1,15 @@
 ---
 last_updated: 2026-03-04T00:00:00Z
 status: active
-tier: gold
-version: 1.0
+tier: platinum
+version: 2.0
 ---
 
 # AI Employee Dashboard
 
-> **Tagline:** Your life and business on autopilot. Local-first, agent-driven, human-in-the-loop.
+> **Tagline:** Your life and business on autopilot. Cloud-scale, local-control, human-in-the-loop.
 
-> **Tier:** 🏆 Gold Tier - Autonomous Employee
+> **Tier:** 💎 Platinum Tier - Always-On Cloud + Local Executive
 
 ---
 
@@ -123,6 +123,47 @@ version: 1.0
 
 ---
 
+## Platinum Tier Features
+
+### ✅ Cloud Agent (24/7 Operation)
+- **Location:** Cloud VM / Vercel
+- **Capabilities:** Email triage, social drafts (draft-only)
+- **Status:** Ready to deploy
+- **Script:** `platinum/cloud/cloud_agent.py`
+
+### ✅ Local Agent (Secure Execution)
+- **Location:** Your local machine
+- **Capabilities:** Approvals, payments, WhatsApp, final actions
+- **Status:** Ready to run
+- **Script:** `platinum/local/local_agent.py`
+
+### ✅ Vault Sync (Git-based)
+- **Sync Method:** Git remote (private repository)
+- **Security:** Credentials never sync to Cloud
+- **Status:** Ready to initialize
+- **Command:** `python platinum/sync/vault_sync.py init --remote <git-url>`
+
+### ✅ Domain Specialization
+| Domain | Cloud | Local |
+|--------|-------|-------|
+| Email Triage | ✅ Draft | ✅ Send (after approval) |
+| Social Media | ✅ Draft | ✅ Post (after approval) |
+| Payments | ❌ Never | ✅ Execute (after approval) |
+| WhatsApp | ❌ Never | ✅ Local browser session |
+
+### ✅ Health Monitoring & Alerting
+- **Monitor:** Cloud Agent, Local Agent, Vault Sync, Disk Space
+- **Alerts:** Email, Webhook, File-based
+- **Config:** `config/health_monitor.json`
+- **Command:** `python platinum/monitoring/health_monitor.py monitor`
+
+### ✅ Vercel Deployment
+- **Status:** Configuration ready
+- **API:** `/health`, `/api/process`, `/webhook/*`
+- **Deploy:** `vercel --prod`
+
+---
+
 ## Quick Commands
 
 ### Core Operations
@@ -157,6 +198,33 @@ python scripts/twitter_poster.py --vault-path ./AI_Employee_Vault post "Your twe
 python scripts/linkedin_poster.py --vault-path ./AI_Employee_Vault post "Your post"
 ```
 
+### Platinum Tier Commands
+```bash
+# Start Cloud Agent (on Cloud VM)
+python platinum/cloud/cloud_agent.py --vault-path ./vault --continuous
+
+# Start Local Agent (on your machine)
+python platinum/local/local_agent.py --vault-path ./AI_Employee_Vault --continuous
+
+# Initialize vault sync
+python platinum/sync/vault_sync.py --vault-path ./AI_Employee_Vault --mode local init --remote <git-url>
+
+# Push vault changes
+python platinum/sync/vault_sync.py --vault-path ./AI_Employee_Vault --mode local push
+
+# Pull vault changes
+python platinum/sync/vault_sync.py --vault-path ./AI_Employee_Vault --mode local pull
+
+# Start health monitoring
+python platinum/monitoring/health_monitor.py --vault-path ./AI_Employee_Vault monitor --interval 60
+
+# Generate health report
+python platinum/monitoring/health_monitor.py --vault-path ./AI_Employee_Vault report
+
+# Verify Platinum tier
+python scripts/verify_platinum.py --vault-path ./AI_Employee_Vault --demo
+```
+
 ### MCP Server Setup
 ```bash
 # Start Odoo MCP server (configure first)
@@ -175,15 +243,29 @@ AI_Employee_Vault/
 ├── Inbox/                  # Raw incoming items
 │   └── Files/              # Dropped files storage
 ├── Needs_Action/           # Items requiring processing
+│   ├── Cloud/              # Cloud agent processes these
+│   └── Local/              # Local agent processes these
 ├── In_Progress/            # Currently being worked on
+│   ├── Cloud/              # Files claimed by Cloud agent
+│   └── Local/              # Files claimed by Local agent
 ├── Done/                   # Completed tasks
 ├── Pending_Approval/       # Awaiting human approval
+│   ├── Cloud/              # Cloud-generated approvals
+│   └── Local/              # Local-generated approvals
 ├── Approved/               # Approved actions ready to execute
 ├── Rejected/               # Rejected actions
 ├── Plans/                  # Generated plans (Plan.md)
+│   ├── Cloud/              # Cloud agent plans
+│   └── Local/              # Local agent plans
 ├── Briefings/              # CEO briefings (Monday Morning Briefing)
 ├── Logs/                   # Audit logs
+│   ├── Cloud/              # Cloud agent logs
+│   ├── Local/              # Local agent logs (never sync)
+│   ├── Monitoring/         # Health monitor logs
+│   ├── Sync/               # Vault sync logs
 │   └── Audit/              # Structured audit entries
+├── Updates/                # Cloud → Local updates (Platinum)
+├── Signals/                # Bidirectional signals (Platinum)
 ├── Posts/                  # Social media posts
 │   ├── Facebook/           # Facebook posts
 │   ├── Instagram/          # Instagram posts
@@ -214,8 +296,8 @@ AI_Employee_Vault/
 | 🥉 Bronze | ✅ Complete | Vault, File Watcher, Basic Orchestrator |
 | 🥈 Silver | ✅ Complete | Gmail/WhatsApp Watchers, LinkedIn, Email MCP, Approval Workflow |
 | 🏆 Gold | ✅ Complete | Odoo, Facebook/Instagram, Twitter, Weekly Audit, Ralph Loop, Audit Logging |
-| 💎 Platinum | ⏳ Pending | Cloud Deployment, Domain Specialization, A2A Upgrade |
+| 💎 Platinum | ✅ Complete | Cloud Deployment, Domain Specialization, Vault Sync, Health Monitoring |
 
 ---
 
-*Generated by AI Employee v1.0 (Gold Tier)*
+*Generated by AI Employee v2.0 (Platinum Tier)*

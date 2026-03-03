@@ -1,160 +1,153 @@
-# AI Employee - Silver Tier
+# AI Employee - Platinum Tier
 
-> **Tagline:** Your life and business on autopilot. Local-first, agent-driven, human-in-the-loop.
+> **Tagline:** Your life and business on autopilot. Cloud-scale, local-control, human-in-the-loop.
 
-This is a **Silver Tier** implementation of the Personal AI Employee from the [Hackathon 0](./Personal%20AI%20Employee%20Hackathon%200_%20Building%20Autonomous%20FTEs%20in%202026.md). It builds upon the Bronze Tier foundation with advanced features including multiple watchers, MCP servers, approval workflows, and automated social media posting.
+> **Tier:** 💎 Platinum Tier - Always-On Cloud + Local Executive
 
-## Silver Tier Features
+This is a **Platinum Tier** implementation of the Personal AI Employee from the [Hackathon 0](./Personal%20AI%20Employee%20Hackathon%200_%20Building%20Autonomous%20FTEs%20in%202026.md). It builds upon Gold Tier with Cloud + Local architecture, secure vault sync, health monitoring, and Vercel deployment.
+
+## Platinum Tier Features
 
 | Feature | Status | Description |
 |---------|--------|-------------|
-| **Multiple Watchers** | ✅ | File System, Gmail, and WhatsApp monitoring |
-| **LinkedIn Auto-Poster** | ✅ | Automated business posts to generate sales |
-| **Plan.md Reasoning** | ✅ | Claude creates multi-step plans for complex tasks |
-| **Email MCP Server** | ✅ | Send emails via Model Context Protocol |
-| **HITL Approval Workflow** | ✅ | Human-in-the-Loop for sensitive actions |
-| **Task Scheduler** | ✅ | Windows Task Scheduler integration |
-| **Agent Skills Module** | ✅ | Reusable AI functionality |
-| **Daily Briefings** | ✅ | Automated CEO briefings |
+| **Cloud Agent** | ✅ | 24/7 email triage + social drafts (draft-only) |
+| **Local Agent** | ✅ | Approvals, payments, WhatsApp, final actions |
+| **Vault Sync** | ✅ | Git-based Cloud ↔ Local synchronization |
+| **Domain Specialization** | ✅ | Cloud vs Local responsibilities |
+| **Security Rules** | ✅ | Credentials never sync to Cloud |
+| **Vercel Deployment** | ✅ | Serverless API for Cloud Agent |
+| **Health Monitoring** | ✅ | System health + alerts |
+| **Odoo Cloud** | ✅ | 24/7 accounting on Cloud VM with HTTPS |
 
 ## Quick Start
 
-### 1. Verify Silver Tier Setup
+### 1. Verify Platinum Tier Setup
 
 ```bash
-python scripts/verify_silver.py --vault-path ./AI_Employee_Vault --project-path .
+python scripts/verify_platinum.py --vault-path ./AI_Employee_Vault --project-path .
 ```
 
-Expected: 55+ checks passed.
+Expected: 55+ checks passed, 0 failed.
 
-### 2. Install Scheduled Tasks (Windows)
+### 2. Deploy to Vercel
 
 ```bash
-# Install all scheduled tasks
-python scripts/setup_scheduler.py --vault-path ./AI_Employee_Vault --project-path . --all install
+# Install Vercel CLI
+npm install -g vercel
 
-# Or install individual tasks
-python scripts/setup_scheduler.py --vault-path ./AI_Employee_Vault --project-path . --filesystem install
-python scripts/setup_scheduler.py --vault-path ./AI_Employee_Vault --project-path . --orchestrator install
-python scripts/setup_scheduler.py --vault-path ./AI_Employee_Vault --project-path . --briefing install
+# Deploy
+vercel --prod
+
+# Test health endpoint
+curl https://your-project.vercel.app/health
 ```
 
-### 3. Configure Gmail Watcher (Optional)
-
-1. Go to [Google Cloud Console](https://console.cloud.google.com/)
-2. Create a project and enable Gmail API
-3. Create OAuth 2.0 credentials (Desktop app)
-4. Download `credentials.json` to `scripts/` folder
-5. First run will require OAuth authentication
+### 3. Setup Cloud VM (Oracle Cloud Free Tier)
 
 ```bash
-python scripts/gmail_watcher.py --vault-path ./AI_Employee_Vault --credentials-path ./scripts/credentials.json
+# SSH into VM
+ssh ubuntu@<VM_PUBLIC_IP>
+
+# Clone repository
+git clone <YOUR_GIT_REPO_URL>
+
+# Start Cloud Agent
+python3 platinum/cloud/cloud_agent.py --vault-path ~/vault --continuous
 ```
 
-### 4. Test LinkedIn Posting
+### 4. Initialize Vault Sync
 
 ```bash
-# Create a draft post
-python scripts/linkedin_poster.py --vault-path ./AI_Employee_Vault --session-path ./linkedin_session draft "Exciting business update coming soon! #Innovation"
+# Initialize Git sync
+python platinum/sync/vault_sync.py --vault-path ./AI_Employee_Vault --mode local init --remote <GIT_REMOTE_URL>
 
-# Post directly (visible browser for first-time login)
-python scripts/linkedin_poster.py --vault-path ./AI_Employee_Vault --session-path ./linkedin_session --visible post "Test post from AI Employee"
+# Push changes
+python platinum/sync/vault_sync.py --vault-path ./AI_Employee_Vault --mode local push
+```
 
-# Generate post content
-python scripts/linkedin_poster.py --vault-path ./AI_Employee_Vault generate --topic "New product launch" --tone professional --length medium
+### 5. Start Health Monitoring
+
+```bash
+python platinum/monitoring/health_monitor.py --vault-path ./AI_Employee_Vault monitor --interval 60
 ```
 
 ## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                    EXTERNAL SOURCES                             │
-├─────────────────┬─────────────────┬─────────────────────────────┤
-│     Gmail       │    WhatsApp     │     File System    │  LinkedIn  │
-└────────┬────────┴────────┬────────┴─────────┬────────┴────┬─────────┘
-         │                 │                  │             │
-         ▼                 ▼                  ▼             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                    PERCEPTION LAYER (Watchers)                  │
-│  ┌──────────────┐ ┌──────────────┐ ┌──────────────┐            │
-│  │ Gmail Watcher│ │WhatsApp Watch│ │File Watcher  │            │
-│  │  (API)       │ │ (Playwright) │ │  (watchdog)  │            │
-│  └──────┬───────┘ └──────┬───────┘ └──────┬───────┘            │
-└─────────┼────────────────┼────────────────┼────────────────────┘
-          │                │                │
-          ▼                ▼                ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                    OBSIDIAN VAULT (Local)                       │
-│  ┌──────────────────────────────────────────────────────────┐  │
-│  │ /Needs_Action/  │ /Plans/  │ /Done/  │ /Posts/  │ /Logs/ │  │
-│  ├──────────────────────────────────────────────────────────┤  │
-│  │ Dashboard.md    │ Company_Handbook.md │ Business_Goals.md│  │
-│  ├──────────────────────────────────────────────────────────┤  │
-│  │ /Pending_Approval/  │  /Approved/  │  /Briefings/       │  │
-│  └──────────────────────────────────────────────────────────┘  │
-└────────────────────────────────┬────────────────────────────────┘
-                                 │
-                                 ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                    REASONING LAYER                              │
-│  ┌───────────────────────────────────────────────────────────┐ │
-│  │                   CLAUDE CODE + Plan Manager              │ │
-│  │   Read → Think → Plan → Request Approval → Write → Done   │ │
-│  └───────────────────────────────────────────────────────────┘ │
-└────────────────────────────────┬────────────────────────────────┘
-                                 │
-              ┌──────────────────┴───────────────────┐
-              ▼                                      ▼
-┌────────────────────────────┐    ┌────────────────────────────────┐
-│    HUMAN-IN-THE-LOOP       │    │         ACTION LAYER           │
-│  ┌──────────────────────┐  │    │  ┌─────────────────────────┐   │
-│  │ Approval Manager     │──┼───▶│  │    MCP SERVERS          │   │
-│  │ /Pending_Approval/   │  │    │  │  ┌──────┐ ┌──────────┐  │   │
-│  │ Move to /Approved    │  │    │  │  │Email │ │ LinkedIn │  │   │
-│  └──────────────────────┘  │    │  │  │ MCP  │ │  Poster  │  │   │
-│                            │    │  │  └──┬───┘ └────┬─────┘  │   │
-└────────────────────────────┘    │  └─────┼──────────┼────────┘   │
-                                  └────────┼──────────┼────────────┘
-                                           │          │
-                                           ▼          ▼
-                                  ┌────────────────────────────────┐
-                                  │     EXTERNAL ACTIONS           │
-                                  │  Send Email │ Post to LinkedIn │
-                                  └────────────────────────────────┘
-
-┌─────────────────────────────────────────────────────────────────┐
-│                    ORCHESTRATION LAYER                          │
-│  ┌───────────────────────────────────────────────────────────┐ │
-│  │         Windows Task Scheduler (via setup_scheduler.py)   │ │
-│  │   On Login: Start watchers                                │ │
-│  │   Daily 8AM: Generate briefing                            │ │
-│  │   Weekly: Cleanup old logs                                │ │
-│  └───────────────────────────────────────────────────────────┘ │
-└─────────────────────────────────────────────────────────────────┘
+│                         CLOUD (24/7)                            │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐ │
+│  │   Vercel    │  │  Cloud VM   │  │      Odoo (HTTPS)       │ │
+│  │   Serverless│  │   Agent     │  │      Accounting         │ │
+│  │   API       │  │  (Docker)   │  │      Invoicing          │ │
+│  └──────┬──────┘  └──────┬──────┘  └───────────┬─────────────┘ │
+│         │                │                      │                │
+│         └────────────────┴──────────────────────┘                │
+│                          │                                       │
+│                   Git Remote (Sync)                              │
+└──────────────────────────┼───────────────────────────────────────┘
+                           │
+                    (Secure Sync)
+                           │
+┌──────────────────────────┼───────────────────────────────────────┐
+│                    LOCAL (Your Machine)                          │
+│                          │                                       │
+│  ┌───────────────────────┴──────────────────────────────────┐   │
+│  │              Local Agent (Python)                         │   │
+│  │  - Human approvals                                        │   │
+│  │  - Payment execution                                      │   │
+│  │  - WhatsApp (browser session)                             │   │
+│  │  - Final send/post actions                                │   │
+│  └───────────────────────────────────────────────────────────┘   │
+│                          │                                       │
+│  ┌───────────────────────┴──────────────────────────────────┐   │
+│  │           Obsidian Vault (Local Copy)                     │   │
+│  │  - Dashboard.md (Local writes)                            │   │
+│  │  - /Approved/ (Local executes)                            │   │
+│  │  - /Pending_Approval/ (Human reviews)                     │   │
+│  └───────────────────────────────────────────────────────────┘   │
+└───────────────────────────────────────────────────────────────────┘
 ```
 
 ## Folder Structure
 
 ```
 AI_Employee_Vault/
-├── Dashboard.md              # Real-time status dashboard
+├── Dashboard.md              # Real-time status dashboard (Local writes only)
 ├── Company_Handbook.md       # Rules of engagement
 ├── Business_Goals.md         # Objectives and metrics
-├── Inbox/                    # Drop folder for new files
-│   └── Files/                # Stored copies of dropped files
 ├── Needs_Action/             # Items pending processing
+│   ├── Cloud/                # Cloud agent processes these
+│   └── Local/                # Local agent processes these
 ├── In_Progress/              # Items currently being worked on
+│   ├── Cloud/                # Files claimed by Cloud agent
+│   └── Local/                # Files claimed by Local agent
 ├── Done/                     # Completed items
 ├── Pending_Approval/         # Awaiting human approval
+│   ├── Cloud/                # Cloud-generated approvals
+│   └── Local/                # Local-generated approvals
 ├── Approved/                 # Approved actions ready to execute
 ├── Rejected/                 # Rejected actions
 ├── Plans/                    # Generated plans (Plan.md)
-├── Briefings/                # Daily/weekly briefings
+│   ├── Cloud/                # Cloud agent plans
+│   └── Local/                # Local agent plans
+├── Briefings/                # Daily/weekly briefings, health reports
 ├── Logs/                     # Audit logs
-└── Posts/                    # LinkedIn posts
-    ├── Drafts/               # Draft posts
-    ├── Scheduled/            # Scheduled posts
-    └── Published/            # Published posts
+│   ├── Cloud/                # Cloud agent logs
+│   ├── Local/                # Local agent logs (never sync)
+│   ├── Monitoring/           # Health monitor logs
+│   ├── Sync/                 # Vault sync logs
+│   └── Audit/                # Structured audit entries
+├── Updates/                  # Cloud → Local updates (Platinum)
+├── Signals/                  # Bidirectional signals (Platinum)
+├── Posts/                    # Social media posts
+│   ├── Facebook/             # Facebook posts
+│   ├── Instagram/            # Instagram posts
+│   ├── Twitter/              # Twitter/X posts
+│   ├── Published/            # All published posts
+│   ├── Scheduled/            # Scheduled posts
+│   └── Drafts/               # Draft posts
+└── Invoices/                 # Generated invoices
 ```
 
 ## Scripts Reference
@@ -358,29 +351,100 @@ python scripts/setup_scheduler.py --vault-path ./AI_Employee_Vault run --task AI
 - Check Task Scheduler library for error details
 - Verify Python path in task configuration
 
-## Silver Tier vs Bronze Tier
+## Platinum Demo Workflow
 
-| Feature | Bronze | Silver |
-|---------|--------|--------|
-| Watchers | 1 (File System) | 3 (File + Gmail + WhatsApp) |
-| MCP Servers | None | Email MCP |
-| Approval Workflow | Basic | Full HITL system |
-| Planning | Manual | Plan.md with steps |
-| Social Media | None | LinkedIn Auto-Poster |
-| Scheduling | Manual | Task Scheduler integration |
-| Agent Skills | None | Full module |
-| Briefings | Manual | Automated daily |
+The Platinum demo demonstrates the full Cloud + Local workflow:
 
-## Next Steps (Gold Tier)
+```bash
+# Run demo simulation
+python scripts/verify_platinum.py --vault-path ./AI_Employee_Vault --demo
+```
 
-After mastering Silver Tier, consider adding:
+### Workflow Steps
 
-1. **Odoo Integration** - Self-hosted ERP via MCP
-2. **Facebook/Instagram** - Social media integration
-3. **Twitter (X) Integration** - Post and monitor
-4. **Multiple MCP Servers** - Browser, calendar, Slack
-5. **Weekly CEO Audit** - Comprehensive business review
-6. **Ralph Wiggum Loop** - Autonomous multi-step completion
+1. **Email arrives** (while Local is offline)
+   - Cloud Agent detects email in `Needs_Action/Cloud/`
+   - Cloud drafts reply (draft-only mode)
+
+2. **Cloud creates approval**
+   - Creates `Pending_Approval/Cloud/APPROVAL_EmailReply_*.md`
+   - Contains draft reply for human review
+
+3. **Vault sync to Local**
+   - Git sync pushes approval file to remote
+   - Local pulls changes
+
+4. **Human reviews and approves**
+   - User reads approval request
+   - Moves file to `Approved/` folder
+
+5. **Local executes action**
+   - Local Agent detects approved file
+   - Sends email via MCP (after approval only)
+   - Logs action to audit log
+
+6. **Task complete**
+   - File moved to `Done/`
+   - Signal sent to Cloud
+   - Dashboard updated
+```
+
+## Security Rules
+
+### NEVER Sync to Cloud
+
+The following files and folders MUST stay local:
+
+```
+.env
+*.key
+*.pem
+*.crt
+*_credentials*
+*_token*
+*_secret*
+credentials.json
+.whatsapp_session/
+banking*
+payment_tokens*
+odoo_config.json
+mcp.json
+Logs/Local/
+```
+
+These are blocked by `.gitignore` (auto-generated by vault sync).
+
+### Single-Writer Rules
+
+| File | Writer | Reason |
+|------|--------|--------|
+| Dashboard.md | Local only | Prevents sync conflicts |
+| Pending_Approval/Cloud/ | Cloud | Cloud-generated approvals |
+| Approved/ | Local | Local executes approved actions |
+| Updates/ | Cloud | Cloud → Local communication |
+| Signals/ | Both | Bidirectional signals |
+
+### Claim-by-Move Rule
+
+1. Agent wants to process a file
+2. Moves from `Needs_Action/<domain>/` to `In_Progress/<agent>/`
+3. First agent to move owns the file
+4. Other agents MUST ignore files in `In_Progress/<other_agent>/`
+
+---
+
+## Tier Progression
+
+| Tier | Status | Features |
+|------|--------|----------|
+| 🥉 Bronze | ✅ Complete | Vault, File Watcher, Basic Orchestrator |
+| 🥈 Silver | ✅ Complete | Gmail/WhatsApp Watchers, LinkedIn, Email MCP, Approval Workflow |
+| 🏆 Gold | ✅ Complete | Odoo, Facebook/Instagram, Twitter, Weekly Audit, Ralph Loop, Audit Logging |
+| 💎 Platinum | ✅ Complete | Cloud Deployment, Domain Specialization, Vault Sync, Health Monitoring |
+
+---
+
+*Built with ❤️ for the AI Employee Hackathon - Platinum Tier*
 
 ## Resources
 
