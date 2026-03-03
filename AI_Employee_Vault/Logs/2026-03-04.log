@@ -1,0 +1,24 @@
+2026-03-04 01:47:13 - FileSystemWatcher - INFO - FileSystemWatcher initialized
+2026-03-04 01:47:13 - FileSystemWatcher - INFO - Vault path: AI_Employee_Vault
+2026-03-04 01:47:13 - FileSystemWatcher - INFO - Check interval: 2s
+2026-03-04 01:47:13 - FileSystemWatcher - INFO - Watch folder: AI_Employee_Vault\Inbox
+2026-03-04 01:47:13 - FileSystemWatcher - INFO - Starting FileSystemWatcher
+2026-03-04 01:47:13 - FileSystemWatcher - INFO - Press Ctrl+C to stop
+2026-03-04 01:47:13 - FileSystemWatcher - INFO - Found 1 new item(s)
+2026-03-04 01:47:13 - FileSystemWatcher - DEBUG - Logged action: file_drop
+2026-03-04 01:47:13 - FileSystemWatcher - INFO - Created action file for: invoice_january_test.txt
+2026-03-04 01:47:13 - FileSystemWatcher - INFO - Created action file: FILE_DROP_20260304_014713_invoice_january_test.txt.md
+2026-03-04 01:47:15 - FileSystemWatcher - DEBUG - Skipping already processed: invoice_january_test.txt
+2026-03-04 01:47:15 - FileSystemWatcher - DEBUG - No new items
+2026-03-04 01:47:17 - FileSystemWatcher - DEBUG - Skipping already processed: invoice_january_test.txt
+2026-03-04 01:47:17 - FileSystemWatcher - DEBUG - No new items
+2026-03-04 01:47:19 - FileSystemWatcher - DEBUG - Skipping already processed: invoice_january_test.txt
+2026-03-04 01:47:19 - FileSystemWatcher - DEBUG - No new items
+2026-03-04 01:47:21 - FileSystemWatcher - DEBUG - Skipping already processed: invoice_january_test.txt
+2026-03-04 01:47:21 - FileSystemWatcher - DEBUG - No new items
+2026-03-04 01:47:23 - FileSystemWatcher - DEBUG - Skipping already processed: invoice_january_test.txt
+2026-03-04 01:47:23 - FileSystemWatcher - DEBUG - No new items
+2026-03-04 01:47:25 - FileSystemWatcher - DEBUG - Skipping already processed: invoice_january_test.txt
+2026-03-04 01:47:25 - FileSystemWatcher - DEBUG - No new items
+2026-03-04 01:47:27 - FileSystemWatcher - DEBUG - Skipping already processed: invoice_january_test.txt
+2026-03-04 01:47:27 - FileSystemWatcher - DEBUG - No new items
